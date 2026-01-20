@@ -1,4 +1,5 @@
 import { Locator, type Page } from "@playwright/test";
+import ConnectWalletModal from "./connectWalletModal";
 
 /**
  * Represents the global header component of the application.
@@ -7,34 +8,34 @@ class Header {
     readonly page: Page;
     readonly headerContainer: Locator;
     readonly logoLink: Locator;
-    readonly sellNowLink: Locator;
+    readonly myItemsLink: Locator;
     readonly collectionsLink: Locator;
     readonly rewardsDropdown: Locator;
     readonly referralsLink: Locator;
     readonly battlePassLink: Locator;
-    readonly ogRewardsLink: Locator;
+    readonly chestsLink: Locator;
     readonly stakingLink: Locator;
     readonly cashbackLink: Locator;
     readonly searchInput: Locator;
     readonly connectWalletButton: Locator;
     readonly mobileSearchButton: Locator;
     readonly mobileMenuButton: Locator;
-    readonly bannerText: Locator;
+    readonly betaBadge: Locator;
 
     constructor(page: Page) {
         this.page = page;
-        this.headerContainer = page.locator('header.sticky');
-        this.logoLink = this.headerContainer.locator('a[href="/"]').first();
+        this.headerContainer = page.locator('header#header');
+        this.logoLink = this.headerContainer.locator('button .baseLogo__logo').first();
         
         // Navigation Links
-        this.sellNowLink = this.headerContainer.getByRole('list').getByText('Sell Now')
+        this.myItemsLink = this.headerContainer.getByRole('list').getByText('My items');
         this.collectionsLink = this.headerContainer.getByRole('list').getByText('Collections');
-        this.rewardsDropdown = this.headerContainer.getByRole('list').getByText('Rewards', { exact: true }).locator('..').first();
+        this.rewardsDropdown = this.headerContainer.getByRole('list').getByText('Rewards', { exact: true }).first();
         
         // Rewards Dropdown Items (assuming the dropdown is open or can be opened)
         this.referralsLink = this.headerContainer.getByRole('link', { name: 'Referrals' });
         this.battlePassLink = this.headerContainer.getByRole('link', { name: 'Battle Pass' }).first();
-        this.ogRewardsLink = this.headerContainer.getByRole('link', { name: 'OG Rewards' });
+        this.chestsLink = this.headerContainer.getByRole('link', { name: 'Chests' });
         this.stakingLink = this.headerContainer.getByRole('link', { name: 'Staking' });
         this.cashbackLink = this.headerContainer.getByRole('link', { name: 'Cashback' });
 
@@ -46,8 +47,8 @@ class Header {
         this.mobileSearchButton = this.headerContainer.locator('div.9inch\\:hidden').filter({ has: page.locator('svg[viewBox="0 0 24 24"]').first() });
         this.mobileMenuButton = this.headerContainer.locator('div.block.lg\\:hidden').filter({ has: page.locator('svg[viewBox="0 0 24 24"]').last() });
 
-        // Beta Banner
-        this.bannerText = this.headerContainer.getByText('Check your wallet for OG')
+        // Beta Badge
+        this.betaBadge = this.headerContainer.getByText('beta', { exact: true });
     }
     
     /**
@@ -55,6 +56,12 @@ class Header {
      */
     async clickRewardsDropdown() {
         await this.rewardsDropdown.click();
+    }
+
+    async clickConnectWallet() {
+        await this.connectWalletButton.click();
+        const connectWalletModal = new ConnectWalletModal(this.page);
+        await connectWalletModal.acceptTosModal();
     }
 }
 

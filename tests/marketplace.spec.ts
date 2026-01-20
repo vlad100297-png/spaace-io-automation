@@ -10,24 +10,23 @@ test.describe('Marketplace Page: Header and Wallet Connection', () => {
     await marketplacePage.navigate();
   });
 
-  // --- Header Tests ---
-
+  // --- Header Tests --- 
   test('should display all essential header elements', async () => {
     await expect(marketplacePage.header.headerContainer).toBeVisible();
     await expect(marketplacePage.header.logoLink).toBeVisible();
-    await expect(marketplacePage.header.sellNowLink).toBeVisible();
+    await expect(marketplacePage.header.myItemsLink).toBeVisible();
     await expect(marketplacePage.header.collectionsLink).toBeVisible();
     await expect(marketplacePage.header.rewardsDropdown).toBeVisible();
     await expect(marketplacePage.header.searchInput).toBeVisible();
     await expect(marketplacePage.header.connectWalletButton).toBeVisible();
-    await expect(marketplacePage.header.bannerText).toBeVisible();
+    await expect(marketplacePage.header.betaBadge).toBeVisible();
   });
 
   test('should open the rewards dropdown and show all links on click', async () => {
     await marketplacePage.header.clickRewardsDropdown();
     await expect(marketplacePage.header.referralsLink).toBeVisible();
     await expect(marketplacePage.header.battlePassLink).toBeVisible();
-    await expect(marketplacePage.header.ogRewardsLink).toBeVisible();
+    await expect(marketplacePage.header.chestsLink).toBeVisible();
     await expect(marketplacePage.header.stakingLink).toBeVisible();
     await expect(marketplacePage.header.cashbackLink).toBeVisible();
   });
@@ -35,19 +34,17 @@ test.describe('Marketplace Page: Header and Wallet Connection', () => {
   // --- Connect Wallet Modal Tests ---
   test('should open the Connect Wallet modal when the connect button is clicked', async () => {
     // Click the button in the header to trigger the modal.
-    await marketplacePage.header.connectWalletButton.click();
+    await marketplacePage.header.clickConnectWallet();
     
     // Wait for the modal to appear and verify its state.
     await marketplacePage.modal.waitForOpen();
     expect(await marketplacePage.modal.isOpen()).toBe(true);
-    await marketplacePage.modal.agreeAndProcedButton.click();
     await expect(marketplacePage.modal.title).toBeVisible();
   });
 
   test('Connect Wallet modal should display all wallet options and the info section', async () => {
-    await marketplacePage.header.connectWalletButton.click();
+    await marketplacePage.header.clickConnectWallet();
     await marketplacePage.modal.waitForOpen();
-    await marketplacePage.modal.agreeAndProcedButton.click();
 
     // Verify all wallet provider buttons are visible.
     [
@@ -69,7 +66,7 @@ test.describe('Marketplace Page: Header and Wallet Connection', () => {
 
   test('should close the Connect Wallet modal when the close icon is clicked', async () => {
     // First, open the modal to test the close functionality.
-    await marketplacePage.header.connectWalletButton.click();
+    await marketplacePage.header.clickConnectWallet();
     await marketplacePage.modal.waitForOpen();
     expect(await marketplacePage.modal.isOpen()).toBe(true);
 
@@ -90,9 +87,8 @@ test.describe('Marketplace Page: Header and Wallet Connection', () => {
     //"Phantom"
   ].forEach((wallet) => {
     test(`should show a QR connection code when ${wallet} wallet is selected`, async () => {
-      await marketplacePage.header.connectWalletButton.click();
+      await marketplacePage.header.clickConnectWallet();
       await marketplacePage.modal.waitForOpen();
-      await marketplacePage.modal.agreeAndProcedButton.click();
 
       // Click the MetaMask button.
       await marketplacePage.modal.page.getByRole('button', { name: wallet }).click();

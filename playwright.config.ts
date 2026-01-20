@@ -1,4 +1,7 @@
 import { defineConfig, devices } from '@playwright/test';
+import dotenv from 'dotenv';
+import path from 'path';
+dotenv.config({ path: path.resolve(__dirname, '.env') });
 
 /**
  * Read environment variables from file.
@@ -26,8 +29,13 @@ export default defineConfig({
   reporter: 'html',
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
-    /* Base URL to use in actions like `await page.goto('')`. */
-    baseURL: 'https://dev-v2.spaace.io',
+    /* Base URL to use in actions like `await page.goto('')`. Can be overridden with env `BASE_URL`. */
+    baseURL: process.env.BASE_URL ?? 'https://dev.nebuzara.xyz/',
+
+    /* If the site is behind HTTP Basic Auth, provide credentials via env vars. */
+    ...(process.env.BASIC_AUTH_USER
+      ? { httpCredentials: { username: process.env.BASIC_AUTH_USER, password: process.env.BASIC_AUTH_PASSWORD ?? '' } }
+      : {}),
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
