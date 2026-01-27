@@ -30,7 +30,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. Can be overridden with env `BASE_URL`. */
-    baseURL: process.env.BASE_URL ?? 'https://dev.nebuzara.xyz/',
+    baseURL: process.env.BASE_URL ?? 'https://dev-v2.nebuzara.xyz/',
 
     /* If the site is behind HTTP Basic Auth, provide credentials via env vars. */
     ...(process.env.BASIC_AUTH_USER
