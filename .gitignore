@@ -13,3 +13,5 @@ synpress-cache/
 *-setup-cache/
 
 .env
+
+.claude/
