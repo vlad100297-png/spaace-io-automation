@@ -1,6 +1,6 @@
 import { testWithSynpress } from '@synthetixio/synpress';
 import { MetaMask, metaMaskFixtures } from '@synthetixio/synpress/playwright';
-import sepoliaSetup from '../wallet-setup/sepolia.setup.js';
+import sepoliaSetup from '../wallet-setup/sepolia.setup';
 
 // Create base test with MetaMask fixtures using Sepolia setup
 const baseTest = testWithSynpress(metaMaskFixtures(sepoliaSetup));

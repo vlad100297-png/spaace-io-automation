@@ -4,7 +4,9 @@ import WalletPage from '../pageObjects/walletPage.js';
 test.describe('MetaMask Wallet Authentication', () => {
   test.use({ viewport: { width: 1920, height: 1080 } });
 
+  // First test needs more time for initial wallet setup (creates cache)
   test('should connect MetaMask wallet to Spaace dApp', async ({ page, metamask, walletAddress }) => {
+    test.setTimeout(120000); // 2 minutes for first run with wallet setup
     await page.goto('/');
 
     const walletPage = new WalletPage(page, metamask);
