@@ -7,4 +7,9 @@ node_modules/
 /playwright/.cache/
 /playwright/.auth/
 
+# Synpress cache
+synpress-cache/
+.synpress/
+*-setup-cache/
+
 .env

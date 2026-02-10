@@ -2,11 +2,15 @@
   "name": "spaace-io-automation",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
     "test": "npx playwright test",
     "test:headed": "npx playwright test --headed",
     "test:debug": "npx playwright test --debug",
+    "test:ui": "npx playwright test tests/home.spec.ts",
+    "test:wallet": "npx playwright test tests/wallet/",
+    "test:wallet:headed": "npx playwright test tests/wallet/ --headed",
     "codegen": "npx playwright codegen",
     "test:report": "npx playwright show-report"
   },
@@ -15,6 +19,7 @@
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.56.0",
+    "@synthetixio/synpress": "^4.1.1",
     "@types/node": "^24.7.0"
   },
   "dependencies": {
