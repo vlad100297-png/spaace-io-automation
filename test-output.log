@@ -1,0 +1,49 @@
+
+> spaace-io-automation@1.0.0 test:wallet:headed
+> npx playwright test tests/wallet/ --headed tests/wallet/authentication.spec.ts -g should connect MetaMask
+
+[dotenv@17.2.3] injecting env (8) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+[DEBUG] Downloading file from https://github.com/MetaMask/metamask-extension/releases/download/v13.13.1/metamask-chrome-13.13.1.zip
+
+📱 MetaMask extension page loaded, starting wallet setup...
+🔐 Starting MetaMask wallet import...
+📝 Using seed phrase: Loaded from .env
+🔑 Using password: Set
+✅ Wallet imported successfully!
+Waiting for MetaMask home screen...
+Retrying home screen load... (2 attempts left)
+Retrying home screen load... (1 attempts left)
+Retrying home screen load... (0 attempts left)
+❌ Error during wallet setup: page.waitForSelector: Timeout 20000ms exceeded.
+Call log:
+[2m  - waiting for locator('[data-testid="network-display"]') to be visible[22m
+
+    at Object.fn (C:\Users\Vlad\Documents\Work\spaace-io-automation\tests\wallet-setup\sepolia.setup.ts:40:24)
+    at ensureWalletCache (C:\Users\Vlad\Documents\Work\spaace-io-automation\tests\global-setup.ts:72:5)
+    at globalSetup (C:\Users\Vlad\Documents\Work\spaace-io-automation\tests\global-setup.ts:96:3) {
+  name: 'TimeoutError'
+}
+📸 Screenshot saved to metamask-error-screenshot.png
+TimeoutError: page.waitForSelector: Timeout 20000ms exceeded.
+Call log:
+[2m  - waiting for locator('[data-testid="network-display"]') to be visible[22m
+
+
+   at wallet-setup\sepolia.setup.ts:40
+
+  38 |   while (retries > 0) {
+  39 |     try {
+> 40 |       await walletPage.waitForSelector(NETWORK_SELECTOR, { timeout: 20000 });
+     |                        ^
+  41 |       console.log('✅ MetaMask home screen loaded');
+  42 |       break;
+  43 |     } catch (err) {
+    at Object.fn (C:\Users\Vlad\Documents\Work\spaace-io-automation\tests\wallet-setup\sepolia.setup.ts:40:24)
+    at ensureWalletCache (C:\Users\Vlad\Documents\Work\spaace-io-automation\tests\global-setup.ts:72:5)
+    at globalSetup (C:\Users\Vlad\Documents\Work\spaace-io-automation\tests\global-setup.ts:96:3)
+
+[1A[2K
+To open last HTML report run:
+[36m[39m
+[36m  npx playwright show-report[39m
+[36m[39m

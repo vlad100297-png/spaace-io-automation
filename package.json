@@ -20,9 +20,12 @@
   "devDependencies": {
     "@playwright/test": "^1.56.0",
     "@synthetixio/synpress": "^4.1.1",
-    "@types/node": "^24.7.0"
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^24.7.0",
+    "fs-extra": "^11.3.3"
   },
   "dependencies": {
+    "@zerostep/playwright": "^0.1.5",
     "dotenv": "^17.2.3",
     "typescript": "^5.9.3"
   }

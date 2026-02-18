@@ -1,8 +1,9 @@
 import path from 'node:path'
 import { pathToFileURL } from 'node:url'
+// @ts-ignore - fs-extra types
 import fs from 'fs-extra'
 import { chromium, type BrowserContext, type Page } from '@playwright/test'
-import sepoliaSetup from './wallet-setup/sepolia.setup'
+import sepoliaSetup from './wallet-setup/sepolia.setup.js'
 
 const SYNPRESS_CACHE_MODULE_PATH = pathToFileURL(
   path.resolve(
@@ -65,7 +66,27 @@ async function ensureWalletCache(): Promise<void> {
 
   try {
     const extensionPage = await waitForExtensionPage(context)
+    console.log('📱 MetaMask extension page loaded, starting wallet setup...')
+
+    // @ts-ignore - Playwright version mismatch between @playwright/test and synpress
     await sepoliaSetup.fn(context, extensionPage)
+
+    console.log('✅ Wallet setup completed successfully!')
+  } catch (error) {
+    console.error('❌ Error during wallet setup:', error)
+
+    // Try to take screenshot for debugging
+    try {
+      const pages = context.pages()
+      if (pages.length > 0) {
+        await pages[0].screenshot({ path: 'metamask-error-screenshot.png' })
+        console.log('📸 Screenshot saved to metamask-error-screenshot.png')
+      }
+    } catch (screenshotError) {
+      console.error('Could not take screenshot:', screenshotError)
+    }
+
+    throw error
   } finally {
     await context.close()
   }

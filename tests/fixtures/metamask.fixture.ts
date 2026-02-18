@@ -25,7 +25,7 @@ export const test = baseTest.extend<{
 
   // Provide wallet address as a fixture
   walletAddress: async ({}, use) => {
-    await use(process.env.WALLET_ADDRESS || '0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266');
+    await use(process.env.WALLET_ADDRESS || '');
   },
 });
 

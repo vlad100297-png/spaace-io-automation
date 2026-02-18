@@ -27,7 +27,8 @@ class WalletPage extends BasePage {
    * Clicks the connect button and approves the connection in MetaMask
    */
   async connectWallet() {
-    await this.page.locator(this.connectWalletButton).click();
+    // Click the first visible connect button (handles multiple buttons)
+    await this.page.locator(this.connectWalletButton).first().click();
     await this.metamask.connectToDapp();
   }
 
